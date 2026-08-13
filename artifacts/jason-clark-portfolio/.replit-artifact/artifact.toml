@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Jason Clark Portfolio"
+description = "An eye-catching, highly readable personal portfolio for Jason Clark that showcases selected work from his public GitHub repositories and makes it easy to get in touch."
+version = "1.0.0"
+id = "artifacts/jason-clark-portfolio"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22073
+
+[services.development]
+run = "pnpm --filter @workspace/jason-clark-portfolio run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/jason-clark-portfolio", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/jason-clark-portfolio/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22073"
+BASE_PATH = "/"
